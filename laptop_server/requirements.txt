@@ -1,0 +1,14 @@
+# Laptop Server Dependencies
+# Install with: pip install -r requirements.txt
+
+# YOLO object detection
+ultralytics==8.3.50
+
+# MediaPipe (pose, face, hand detection)
+mediapipe==0.10.18
+
+# OpenCV (full version with GUI for display)
+opencv-python==4.9.0.80
+
+# NumPy
+numpy==1.26.4
