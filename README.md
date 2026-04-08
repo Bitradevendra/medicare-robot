@@ -1,24 +1,33 @@
-# medicare-robot
+# Medicare Robot
 
-`medicare-robot` is a two-part robotics project with a Raspberry Pi controller and a laptop-side detection server.
+A robotics stack that blends physical movement, medicine-box control, voice interaction, camera streaming, and live laptop-side detection into one cohesive assistant system.
 
-## Overview
+## Why It Grabs Attention
 
-The Raspberry Pi side manages voice interaction, movement, servo control, and streaming, while the laptop side performs live vision detection on the incoming video feed.
+`medicare-robot` feels like a real prototype, not just a folder of scripts. It has a split-brain architecture: the Raspberry Pi handles embodiment, while the laptop handles vision.
+
+## What It Does
+
+- listens for voice commands on the Raspberry Pi
+- controls robot motion and servo-driven medicine-box actions
+- streams live video from the robot side
+- runs laptop-side detection with YOLO and MediaPipe
+- supports AI-assisted spoken responses
 
 ## Project Structure
 
 ```text
 medicare-robot/
+|-- raspberry_pi/
+|   |-- main.py
+|   |-- motor_controller.py
+|   |-- servo_controller.py
+|   |-- voice_controller.py
+|   |-- gemini_handler.py
+|   `-- video_streamer.py
 |-- laptop_server/
 |   |-- detection_server.py
 |   |-- config.py
-|   `-- requirements.txt
-|-- raspberry_pi/
-|   |-- main.py
-|   |-- gemini_handler.py
-|   |-- motor_controller.py
-|   |-- video_streamer.py
 |   `-- requirements.txt
 `-- README.md
 ```
@@ -27,17 +36,10 @@ medicare-robot/
 
 - Python 3.8+
 - Raspberry Pi hardware for the robot side
-- laptop or PC for the detection server
-- camera, motors, servo hardware, and GPIO wiring
+- laptop or PC for detection and visualization
+- connected motors, servo, microphone, and camera hardware
 
 ## Installation
-
-Laptop side:
-
-```bash
-cd laptop_server
-pip install -r requirements.txt
-```
 
 Raspberry Pi side:
 
@@ -46,16 +48,23 @@ cd raspberry_pi
 pip install -r requirements.txt
 ```
 
-## Running The Project
+Laptop side:
 
-On Raspberry Pi:
+```bash
+cd laptop_server
+pip install -r requirements.txt
+```
+
+## Run Locally
+
+Start the robot controller:
 
 ```bash
 cd raspberry_pi
 python main.py
 ```
 
-On laptop:
+Start the detection server:
 
 ```bash
 cd laptop_server
@@ -64,6 +73,7 @@ python detection_server.py
 
 ## How It Works
 
-- the Pi listens for commands and controls motors, servo movement, audio output, and streaming
-- the laptop server receives the video feed and runs YOLO and MediaPipe detection
-- the system combines robot control and real-time monitoring into one workflow
+- the Pi runs the main control loop, interprets commands, and manages hardware actions
+- the camera stream is sent outward for monitoring and analysis
+- the laptop receives that stream and overlays detections in real time
+- together, both halves turn the project into a believable assistive robotics prototype
